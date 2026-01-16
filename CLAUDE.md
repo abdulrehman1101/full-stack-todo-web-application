@@ -1,4 +1,4 @@
-# Claude Code Rules
+﻿# Claude Code Rules
 
 This file is generated during init for the selected agent.
 
@@ -114,6 +114,105 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 2.  **Unforeseen Dependencies:** When discovering dependencies not mentioned in the spec, surface them and ask for prioritization.
 3.  **Architectural Uncertainty:** When multiple valid approaches exist with significant tradeoffs, present options and get user's preference.
 4.  **Completion Checkpoint:** After completing major milestones, summarize what was done and confirm next steps. 
+
+## Agent Responsibilities
+
+This project uses a multi-agent architecture where each specialized agent handles specific layers of the application:
+
+### Auth Agent Responsibilities:
+- Handle all authentication logic
+- Configure Better Auth with JWT support
+- Implement signup and signin flows
+- Manage JWT issuance and validation logic
+- Set up session management
+
+### Frontend Agent Responsibilities:
+- Build Next.js 16+ applications using App Router
+- Implement TypeScript type safety
+- Apply Tailwind CSS styling with CSS Modules
+- Integrate tsParticles for background effects
+- Implement Framer Motion animations
+- Use Lucide Icons for UI components
+- Handle API client integration with JWT headers
+- Manage frontend state and user interfaces
+
+### DB Agent Responsibilities:
+- Design database schemas using SQLModel
+- Create and manage SQLModel models
+- Handle database migrations
+- Write optimized queries
+- Perform Neon Serverless PostgreSQL operations
+- Implement user-scoped data filtering and access controls
+
+### Backend Agent Responsibilities:
+- Develop FastAPI applications
+- Create RESTful API routes
+- Implement JWT verification middleware
+- Handle request/response validation and processing
+- Integrate SQLModel with FastAPI
+- Filter data by authenticated user ID
+- Manage API security and error handling
+
+## JWT Authentication Flow
+
+All authentication must follow this strict JWT-based flow:
+
+1. User authenticates via Better Auth on the frontend
+2. Better Auth creates a session and issues a JWT containing user ID and email
+3. Frontend stores the JWT securely and includes it in API requests as `Authorization: Bearer <token>`
+4. FastAPI backend extracts and verifies the JWT signature using the shared secret
+5. Backend decodes user ID and email from the JWT payload
+6. All database queries are filtered by the authenticated user ID to ensure data isolation
+7. API responses only return data belonging to the authenticated user
+
+## API Security Rules
+
+- All API endpoints must implement JWT verification middleware
+- Never return data that doesn't belong to the authenticated user
+- Implement proper rate limiting and input validation
+- Sanitize all user inputs to prevent injection attacks
+- Log all authentication attempts and security-relevant events
+- Implement proper CORS policies restricting origins
+
+## User-Scoped Data Access Rules
+
+- All database queries must be filtered by the authenticated user ID
+- Users can only access, modify, or delete their own data
+- Implement row-level security at the application layer (not relying solely on database permissions)
+- Validate user ownership before performing any data operations
+- Return 404 (not 403) for resources that don't belong to the user to avoid information disclosure
+
+## Development Workflow Rules
+
+Follow this mandatory sequence for all development work:
+
+1. **Write Specification** - Create a detailed spec document outlining requirements
+2. **Generate Plan** - Create an architectural plan using `/sp.plan`
+3. **Break into Tasks** - Decompose the plan into testable tasks using `/sp.tasks`
+4. **Implement via Claude Code** - Execute tasks using the appropriate specialized agents
+
+## Tech Stack Requirements
+
+This project follows a specific technology stack that must be adhered to:
+
+### Frontend:
+- Next.js 14+ (App Router)
+- TypeScript
+- Tailwind CSS
+- CSS Modules
+- tsParticles (for background effects)
+- Framer Motion (for animations)
+- Lucide Icons
+
+### Backend:
+- Python FastAPI
+- SQLModel ORM
+
+### Database:
+- Neon Serverless PostgreSQL
+
+### Authentication:
+- Better Auth with JWT enabled
 
 ## Default policies (must follow)
 - Clarify and plan first - keep business understanding separate from technical plan and carefully architect and implement.

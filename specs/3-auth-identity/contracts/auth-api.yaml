@@ -1,0 +1,152 @@
+# API Contract: Authentication Service
+
+## Overview
+This contract defines the API endpoints for the authentication service using Better Auth and JWT tokens.
+
+## Authentication Endpoints
+
+### POST /api/auth/register
+Register a new user account
+
+**Request**:
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (201 Created)**:
+```json
+{
+  "id": "uuid-12345678-1234-1234-1234-123456789012",
+  "email": "user@example.com",
+  "createdAt": "2026-01-13T10:00:00Z"
+}
+```
+
+**Response (400 Bad Request)**:
+```json
+{
+  "error": "Email already exists"
+}
+```
+
+### POST /api/auth/login
+Authenticate user and return JWT token
+
+**Request**:
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (200 OK)**:
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expiresIn": 900,
+  "tokenType": "Bearer"
+}
+```
+
+**Response (401 Unauthorized)**:
+```json
+{
+  "error": "Invalid email or password"
+}
+```
+
+### GET /api/auth/me
+Get current authenticated user info
+
+**Headers**:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Response (200 OK)**:
+```json
+{
+  "id": "uuid-12345678-1234-1234-1234-123456789012",
+  "email": "user@example.com",
+  "createdAt": "2026-01-13T10:00:00Z"
+}
+```
+
+**Response (401 Unauthorized)**:
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+## Protected API Endpoints
+
+### GET /api/users/me
+Get authenticated user details
+
+**Headers**:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Response (200 OK)**:
+```json
+{
+  "id": "uuid-12345678-1234-1234-1234-123456789012",
+  "email": "user@example.com",
+  "createdAt": "2026-01-13T10:00:00Z"
+}
+```
+
+**Response (401 Unauthorized)**:
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+## JWT Token Structure
+
+### JWT Header
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+### JWT Payload
+```json
+{
+  "sub": "uuid-12345678-1234-1234-1234-123456789012",
+  "email": "user@example.com",
+  "iat": 1642089600,
+  "exp": 1642090500,
+  "jti": "token-id-123"
+}
+```
+
+## Error Responses
+
+All error responses follow the same structure:
+
+```json
+{
+  "error": "Error message describing the issue",
+  "errorCode": "UNAUTHORIZED|INVALID_CREDENTIALS|USER_NOT_FOUND",
+  "timestamp": "2026-01-13T10:00:00Z"
+}
+```
+
+## Authentication Flow
+
+1. User registers via POST /api/auth/register
+2. User logs in via POST /api/auth/login to get JWT token
+3. User includes JWT token in Authorization header for protected endpoints
+4. Backend verifies JWT signature using BETTER_AUTH_SECRET
+5. Backend extracts user ID from token and validates against database
+6. Backend processes request with authenticated user context

@@ -34,7 +34,7 @@ All code must follow TDD practices: tests written before implementation, with co
 Deployment and infrastructure management must be treated as first-class concerns, with containerization, orchestration, and automated CI/CD pipelines established from Phase IV, supporting both local and cloud environments.
 
 ## Technical Constraints
-All technology stack decisions must strictly adhere to the prescribed phases: Phase I (Python console), Phase II (Next.js/FastAPI/SQLModel/NeonDB), Phase III (OpenAI ChatKit/Agents SDK/MCP SDK), Phase IV (Docker/Minikube/Helm/kubectl-ai), Phase V (Kafka/Dapr/DigitalOcean DOKS). No deviation from specified technologies is permitted without constitutional amendment.
+All technology stack decisions must strictly adhere to the prescribed phases: Phase I (Python console), Phase II (Next.js/FastAPI/SQLModel/NeonDB/Better Auth), Phase III (OpenAI ChatKit/Agents SDK/MCP SDK), Phase IV (Docker/Minikube/Helm/kubectl-ai), Phase V (Kafka/Dapr/DigitalOcean DOKS). No deviation from specified technologies is permitted without constitutional amendment.
 
 ## Development Workflow Standards
 Feature development follows Spec-Driven Development methodology with formal specifications, architectural plans, and detailed task breakdowns. Each phase must include comprehensive documentation, automated testing, performance benchmarks, and security assessments before phase completion. Code reviews require approval from at least two team members with attention to architectural compliance.
