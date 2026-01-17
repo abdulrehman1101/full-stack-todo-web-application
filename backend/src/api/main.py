@@ -49,7 +49,7 @@ async def add_security_headers(request, call_next):
 origins = [
     "http://localhost:3000",
     "https://abdulrehman2-todowebapp-backend.hf.space",
-    "https://your-vercel-app-url.vercel.app",
+    "https://todo-web-application-lilac.vercel.app",
 ]
 app.add_middleware(
     CORSMiddleware,
