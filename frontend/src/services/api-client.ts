@@ -3,10 +3,10 @@
  * This module provides an API client that automatically attaches JWT tokens to requests.
  */
 
-import { getAuth } from "better-auth/client";
+import { createAuthClient } from "better-auth/client";
 
 // Initialize the auth client
-const authClient = getAuth({
+const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL || "http://localhost:3000",
   fetch: globalThis.fetch,
 });
@@ -37,7 +37,7 @@ class ApiClient {
     const headers = {
       "Content-Type": "application/json",
       ...options.headers,
-    };
+    } as Record<string, string>;
 
     // Get the current session to access the JWT token
     const session = await this.authClient.getSession();

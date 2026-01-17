@@ -23,10 +23,6 @@ export const particlesConfig: ISourceOptions = {
       straight: false,
     },
     number: {
-      density: {
-        enable: true,
-        area: 800,
-      },
       value: 40,
     },
     opacity: {
@@ -67,12 +63,12 @@ export const particlesConfig: ISourceOptions = {
 export const bubbleAtmosphereConfig: ISourceOptions = {
   ...particlesConfig,
   particles: {
-    ...particlesConfig.particles,
+    ...(particlesConfig.particles || {}),
     color: {
       value: ["#6366f1", "#22d3ee", "#8b5cf6"], // indigo-500, cyan-400, violet-400
     },
     move: {
-      ...particlesConfig.particles.move,
+      ...(particlesConfig.particles?.move || {}),
       speed: 0.5,
     },
     size: {
@@ -83,34 +79,21 @@ export const bubbleAtmosphereConfig: ISourceOptions = {
       animation: {
         enable: true,
         speed: 0.5,
-        minimumValue: 0.1,
         sync: false,
       },
     },
   },
   interactivity: {
-    ...particlesConfig.interactivity,
+    ...(particlesConfig.interactivity || {}),
     events: {
-      ...particlesConfig.interactivity.events,
-      onDiv: {
-        elementId: "repulse-div",
-        enable: true,
-        mode: "bounce",
-        type: "circle",
-      },
+      ...(particlesConfig.interactivity?.events || {}),
     },
     modes: {
-      ...particlesConfig.interactivity.modes,
+      ...(particlesConfig.interactivity?.modes || {}),
       bubble: {
         distance: 200,
         duration: 2,
         mix: true,
-        divs: {
-          distance: 200,
-          duration: 0.4,
-          mix: true,
-          selectors: "#bubble-div",
-        },
       },
     },
   },

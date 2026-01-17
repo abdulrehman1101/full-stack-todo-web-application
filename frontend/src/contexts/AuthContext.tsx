@@ -66,14 +66,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const response = await apiClient.get('/me'); // GET /api/v1/me endpoint
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       // If the request fails with 401, try again after a small delay
-      if (error.response?.status === 401) {
+      if (error?.response?.status === 401) {
         await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay
         try {
           const response = await apiClient.get('/me');
           return response.data;
-        } catch (retryError) {
+        } catch (retryError: any) {
           return null;
         }
       }

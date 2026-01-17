@@ -14,18 +14,10 @@ export const auth = betterAuth({
   },
   secret: process.env.BETTER_AUTH_SECRET || "ZUu822SMcByw8CNnTkOBe4NO5ElvkcCP",
   plugins: [
-    jwt({
-      secret: process.env.BETTER_AUTH_SECRET || "ZUu822SMcByw8CNnTkOBe4NO5ElvkcCP",
-      expiresIn: "15m", // Token expires in 15 minutes
-    }),
+    jwt(),
   ],
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false, // For MVP, we're not requiring email verification
-  },
-  account: {
-    accountModel: {
-      // Configuration for the account model
-    }
   }
 });

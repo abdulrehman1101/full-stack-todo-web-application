@@ -46,20 +46,17 @@ async def add_security_headers(request, call_next):
 
     return response
 
-# Add Trusted Host Middleware for security
-app.add_middleware(
-    TrustedHostMiddleware,
-    allowed_hosts=settings.cors_origins_list + ["localhost", "127.0.0.1", "0.0.0.0"]
-)
-
-# Add CORS middleware
+origins = [
+    "http://localhost:3000",
+    "https://abdulrehman2-todowebapp-backend.hf.space",
+    "https://your-vercel-app-url.vercel.app",
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["Access-Control-Allow-Origin"]
 )
 
 # Initialize rate limiter

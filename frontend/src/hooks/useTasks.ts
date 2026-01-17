@@ -141,10 +141,10 @@ export const useTasks = () => {
 
   // Delete a task with optimistic update
   const deleteTask = useCallback(async (taskId: string) => {
-    try {
-      // Find the task before removing it (for potential rollback)
-      const taskToDelete = tasks.find(t => t.id === taskId);
+    // Find the task before removing it (for potential rollback)
+    const taskToDelete = tasks.find(t => t.id === taskId);
 
+    try {
       // Optimistic update: remove from local state immediately
       setTasks(prev => prev.filter(t => t.id !== taskId));
 

@@ -39,15 +39,6 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.3,
-        ease: 'easeOut',
-        delay: index * 0.1
-      }
-    },
     exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } }
   };
 
@@ -66,7 +57,15 @@ const TaskCard: React.FC<TaskCardProps> = ({
     <motion.div
       variants={cardVariants}
       initial="hidden"
-      animate="visible"
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.3,
+          ease: "easeOut" as const,
+          delay: index * 0.1
+        }
+      }}
       exit="exit"
       className={`rounded-xl p-4 border border-white/10 bg-[#051df5] dark:bg-[#020617]/50 dark:border-indigo-500/50 shadow-lg shadow-blue-500/20 dark:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all duration-300`}
     >

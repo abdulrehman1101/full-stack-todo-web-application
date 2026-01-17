@@ -9,15 +9,6 @@ interface TaskCardSkeletonProps {
 const TaskCardSkeleton: React.FC<TaskCardSkeletonProps> = ({ index = 0 }) => {
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.3,
-        ease: 'easeOut',
-        delay: index * 0.1
-      }
-    },
     exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } }
   };
 
@@ -25,7 +16,15 @@ const TaskCardSkeleton: React.FC<TaskCardSkeletonProps> = ({ index = 0 }) => {
     <motion.div
       variants={cardVariants}
       initial="hidden"
-      animate="visible"
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.3,
+          ease: "easeOut" as const,
+          delay: index * 0.1
+        }
+      }}
       exit="exit"
       className="glass rounded-xl p-4 border backdrop-blur-md bg-white/5 border-indigo-500/50 shadow-[0_0_10px_rgba(99,102,241,0.3)]"
     >

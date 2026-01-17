@@ -5,10 +5,10 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Register } from './Register'; // Adjust import path as needed
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../contexts/AuthContext';
 
 // Mock the useAuth hook
-jest.mock('../../hooks/useAuth');
+jest.mock('../../contexts/AuthContext');
 
 describe('Email Format Validation Tests', () => {
   beforeEach(() => {
