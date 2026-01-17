@@ -7,15 +7,15 @@ import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins/jwt";
 
 // Initialize Better Auth with JWT plugin
-const auth = betterAuth({
+export const auth = betterAuth({
   database: {
-    provider: "sqlite", // This will be updated when we connect to the real database
+    provider: process.env.NODE_ENV === "production" ? "postgres" : "sqlite", // Use postgres in production, sqlite otherwise
     url: process.env.DATABASE_URL || "file:./dev.db",
   },
-  secret: process.env.NEXT_PUBLIC_BETTER_AUTH_SECRET || "ZUu822SMcByw8CNnTkOBe4NO5ElvkcCP",
+  secret: process.env.BETTER_AUTH_SECRET || "ZUu822SMcByw8CNnTkOBe4NO5ElvkcCP",
   plugins: [
     jwt({
-      secret: process.env.NEXT_PUBLIC_BETTER_AUTH_SECRET || "ZUu822SMcByw8CNnTkOBe4NO5ElvkcCP",
+      secret: process.env.BETTER_AUTH_SECRET || "ZUu822SMcByw8CNnTkOBe4NO5ElvkcCP",
       expiresIn: "15m", // Token expires in 15 minutes
     }),
   ],
@@ -29,5 +29,3 @@ const auth = betterAuth({
     }
   }
 });
-
-export default auth;
